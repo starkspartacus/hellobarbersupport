@@ -2,10 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  
+  // @ts-ignore - session.user.role is injected in auth.ts
+  const userRole = session?.user?.role || "support";
+  const isSuperAdmin = userRole === "super_admin" || userRole === "admin";
 
   const isActive = (path: string) => {
     return pathname === path || pathname.startsWith(`${path}/`);
@@ -63,6 +68,21 @@ export default function Sidebar() {
             History
           </Link>
         </li>
+        {isSuperAdmin && (
+          <li>
+            <Link 
+              href="/dashboard/team" 
+              className={`flex items-center gap-md p-sm rounded-lg transition-colors duration-200 cursor-pointer active:scale-95 ${
+                isActive("/dashboard/team")
+                  ? "bg-on-secondary-fixed-variant text-on-secondary"
+                  : "text-outline-variant hover:text-on-secondary hover:bg-on-secondary-fixed-variant"
+              }`}
+            >
+              <span className="material-symbols-outlined">manage_accounts</span>
+              Équipe
+            </Link>
+          </li>
+        )}
       </ul>
 
       <ul className="mt-auto space-y-xs pt-md border-t border-on-secondary-fixed-variant">

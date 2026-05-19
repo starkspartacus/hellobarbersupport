@@ -31,7 +31,7 @@ export default function ActiveChatsPage() {
   }, [token, fetchActiveChats]);
 
   const handleChatSelect = (id: string) => {
-    const chat = activeChats.find((c: any) => c._id === id);
+    const chat = activeChats.find((c: any) => c.id === id || c._id === id);
     if (chat && token) {
       selectChat(chat, token);
     }
@@ -39,13 +39,15 @@ export default function ActiveChatsPage() {
 
   const handleSendMessage = () => {
     if (!inputValue.trim() || !selectedChat || !token) return;
-    sendMessage(selectedChat._id, inputValue, token);
+    const chatId = (selectedChat as any).id || (selectedChat as any)._id;
+    sendMessage(chatId, inputValue, token);
     setInputValue("");
   };
 
   const handleResolveTicket = () => {
     if (selectedChat && token) {
-      resolveTicket(selectedChat._id, token);
+      const chatId = (selectedChat as any).id || (selectedChat as any)._id;
+      resolveTicket(chatId, token);
     }
   };
 
@@ -57,13 +59,16 @@ export default function ActiveChatsPage() {
   };
 
   const mapToChatItem = (chat: any) => {
+    const customerName = chat.ownerName || (chat.client ? `${chat.client.firstName} ${chat.client.lastName}` : "Utilisateur inconnu");
+    const initials = customerName !== "Utilisateur inconnu" ? customerName.substring(0, 2).toUpperCase() : "U";
+    const chatId = chat.id || chat._id;
     return {
-      id: chat._id,
-      customerName: chat.client ? `${chat.client.firstName} ${chat.client.lastName}` : "Utilisateur inconnu",
-      initials: chat.client ? chat.client.firstName[0] + chat.client.lastName[0] : "U",
-      lastMessage: `Ticket ID: ${chat._id.substring(0, 8)}`,
+      id: chatId,
+      customerName,
+      initials,
+      lastMessage: `Ticket ID: ${chatId.substring(0, 8)}`,
       status: chat.lastMessageAt ? new Date(chat.lastMessageAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : "Now",
-      isActive: selectedChat?._id === chat._id,
+      isActive: (selectedChat as any)?.id === chatId || (selectedChat as any)?._id === chatId,
       tags: ["Support"]
     };
   };
@@ -124,17 +129,17 @@ export default function ActiveChatsPage() {
               {/* Chat Messages Area */}
               <div className="flex-1 overflow-y-auto p-lg flex flex-col gap-lg bg-[#FAFBFC]">
                 {messages.map((msg: any, idx: number) => {
-                  const isAgent = msg.senderModel === "SupportTech" || msg.senderModel === "Admin";
+                  const isAgent = msg.senderRole === "admin" || msg.senderRole === "super_admin" || msg.senderRole === "support";
                   const mappedMsg = {
-                    id: msg._id,
+                    id: msg.id || msg._id,
                     sender: isAgent ? "agent" as const : "customer" as const,
                     text: msg.text,
                     time: new Date(msg.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     initials: isAgent ? adminInitials : activeMappedChat.initials,
                     customerAvatar: undefined
                   };
-                  const showAvatar = idx === 0 || messages[idx - 1].senderModel !== msg.senderModel;
-                  return <ChatBubble key={msg._id} message={mappedMsg} showAvatar={showAvatar} />;
+                  const showAvatar = idx === 0 || messages[idx - 1].senderRole !== msg.senderRole;
+                  return <ChatBubble key={msg.id || msg._id} message={mappedMsg} showAvatar={showAvatar} />;
                 })}
               </div>
 

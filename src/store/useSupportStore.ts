@@ -3,21 +3,19 @@ import axiosInstance from '@/lib/axiosInstance';
 import { io, Socket } from 'socket.io-client';
 
 interface ChatMessage {
-  _id: string;
+  id: string;
   conversationId: string;
-  senderId: string;
-  senderModel: string;
+  senderUserId: string;
+  senderRole: string;
   text: string;
   createdAt: string;
 }
 
 interface Conversation {
-  _id: string;
+  id: string;
   status: 'waiting' | 'active' | 'resolved';
-  client?: {
-    firstName: string;
-    lastName: string;
-  };
+  ownerName?: string;
+  ownerEmail?: string;
   supportId?: string;
   lastMessageAt?: string;
 }
@@ -65,7 +63,7 @@ export const useSupportStore = create<SupportState>((set, get) => ({
 
   fetchActiveChats: async (token) => {
     try {
-      const res = await axiosInstance.get('/chat/admin/conversations?status=active', {
+      const res = await axiosInstance.get('/chat/admin/conversations?status=open', {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ activeChats: res.data });
@@ -77,7 +75,7 @@ export const useSupportStore = create<SupportState>((set, get) => ({
   selectChat: async (chat, token) => {
     set({ selectedChat: chat, messages: [] });
     if (chat && token) {
-      await get().fetchMessages(chat._id, token);
+      await get().fetchMessages(chat.id || (chat as any)._id, token);
     }
   },
 
@@ -145,7 +143,7 @@ export const useSupportStore = create<SupportState>((set, get) => ({
     // Simulate listening to events (adjust according to your backend implementation)
     socket.on('newMessage', (message: ChatMessage) => {
       const { selectedChat, messages } = get();
-      if (selectedChat && selectedChat._id === message.conversationId) {
+      if (selectedChat && selectedChat.id === message.conversationId) {
         set({ messages: [...messages, message] });
       }
     });
