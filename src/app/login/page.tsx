@@ -198,12 +198,18 @@ export default function LoginPage() {
         </form>
       </main>
 
-      <footer className="absolute bottom-4 sm:bottom-8 w-full text-center z-0">
+      <footer className="absolute bottom-4 sm:bottom-8 w-full flex flex-col items-center gap-2 z-0">
         <Link
-          href="/confidentialite"
+          href="/privacy"
           className="text-xs sm:text-sm text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline"
         >
           Politique de confidentialité et gestion des données
+        </Link>
+        <Link
+          href="/delete-account"
+          className="text-xs sm:text-sm text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline"
+        >
+          Demander la suppression de mes données
         </Link>
       </footer>
     </div>
