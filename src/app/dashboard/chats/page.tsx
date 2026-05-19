@@ -170,10 +170,31 @@ export default function ActiveChatsPage() {
               </div>
             </>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-on-surface-variant p-8 text-center">
-              <span className="material-symbols-outlined text-[64px] opacity-50 mb-4">chat</span>
-              <h3 className="font-headline-sm">Aucun chat sélectionné</h3>
-              <p className="font-body-md mt-2 max-w-md">Sélectionnez une conversation dans la liste de gauche pour commencer à discuter.</p>
+            <div className="flex-1 flex flex-col items-center justify-center p-8 text-center bg-surface w-full h-full">
+              <div className="relative flex items-center justify-center mb-8">
+                {/* Effets de cercles (Ripple) pour un design moderne */}
+                <div className="absolute w-40 h-40 bg-primary/5 rounded-full animate-pulse"></div>
+                <div className="absolute w-32 h-32 bg-primary/10 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+                <div className="absolute w-24 h-24 bg-primary/20 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+                
+                {/* Icône principale */}
+                <div className="relative flex items-center justify-center w-16 h-16 bg-primary text-on-primary shadow-lg rounded-2xl rotate-3 transition-transform hover:rotate-0 duration-300">
+                  <span className="material-symbols-outlined text-[32px]">support_agent</span>
+                </div>
+              </div>
+              
+              <h3 className="text-2xl md:text-3xl font-bold text-on-surface mb-3 tracking-tight">
+                Votre espace de support
+              </h3>
+              
+              <p className="text-on-surface-variant max-w-[420px] w-full mx-auto leading-relaxed text-base md:text-lg">
+                Sélectionnez une conversation dans le panneau de gauche pour consulter l'historique et répondre à l'utilisateur.
+              </p>
+              
+              <div className="mt-8 flex items-center gap-3 px-5 py-2.5 bg-surface-container rounded-full border border-outline-variant/50 text-on-surface-variant text-sm font-medium shadow-sm">
+                <span className="material-symbols-outlined text-[18px] text-primary animate-pulse">bolt</span>
+                <span>En attente de nouvelles requêtes...</span>
+              </div>
             </div>
           )}
         </section>
