@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Base URL for the NestJS backend
-const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:7700/api';
+// Base URL for the NestJS backend. Use 127.0.0.1 to avoid Node.js IPv6 localhost issues
+const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:7700/api';
 
 const axiosInstance = axios.create({
   baseURL,

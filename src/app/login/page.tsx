@@ -80,7 +80,7 @@ export default function LoginPage() {
           </p>
         </header>
 
-        <form onSubmit={isOtpStep ? handleVerifyOtp : handleRequestOtp} className="w-full space-y-md">
+        <form suppressHydrationWarning onSubmit={isOtpStep ? handleVerifyOtp : handleRequestOtp} className="w-full space-y-md">
           {error && (
             <div className="bg-error-container text-on-error-container p-3 rounded-lg text-body-sm font-body-sm mb-4">
               {error}
@@ -97,6 +97,7 @@ export default function LoginPage() {
                   <span className="material-symbols-outlined text-outline text-[18px]">mail</span>
                 </div>
                 <input 
+                  suppressHydrationWarning
                   className="w-full pl-10 pr-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors placeholder:text-outline-variant" 
                   id="email" 
                   name="email" 
@@ -118,6 +119,7 @@ export default function LoginPage() {
                   <span className="material-symbols-outlined text-outline text-[18px]">password</span>
                 </div>
                 <input 
+                  suppressHydrationWarning
                   className="w-full pl-10 pr-3 py-2 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors placeholder:text-outline-variant" 
                   id="otp" 
                   name="otp" 
@@ -132,6 +134,7 @@ export default function LoginPage() {
           )}
 
           <button 
+            suppressHydrationWarning
             className="w-full bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-md text-label-md py-3 rounded-lg flex items-center justify-center transition-colors mt-lg disabled:opacity-70" 
             type="submit"
             disabled={isLoading}

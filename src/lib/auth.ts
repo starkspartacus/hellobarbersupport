@@ -22,11 +22,14 @@ export const authOptions: NextAuthOptions = {
         }
 
         try {
+          console.log(`[NextAuth] Verifying OTP for ${credentials.email} with code ${credentials.otp}`);
           const res = await axiosInstance.post('/auth/admin/verify-otp', {
             email: credentials.email,
             otp: credentials.otp,
           });
 
+          console.log(`[NextAuth] Backend response status:`, res.status);
+          
           // Suppose backend returns { accessToken: "...", user: {...} }
           const { accessToken, user } = res.data;
 
@@ -40,8 +43,8 @@ export const authOptions: NextAuthOptions = {
             };
           }
           return null;
-        } catch (error) {
-          console.error("Erreur de vérification OTP:", error);
+        } catch (error: any) {
+          console.error("[NextAuth] Erreur de vérification OTP:", error?.response?.data || error.message);
           return null;
         }
       }
