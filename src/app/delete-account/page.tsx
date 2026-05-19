@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import axiosInstance from "@/lib/axiosInstance";
+import Link from "next/link";
 
 export default function DeleteAccountPage() {
   const [email, setEmail] = useState("");
@@ -28,7 +29,7 @@ export default function DeleteAccountPage() {
       });
       setEmail("");
       setReason("");
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(error);
       setMessage({
         text: "Une erreur est survenue lors de l'envoi de votre demande. Veuillez réessayer plus tard.",
@@ -46,8 +47,8 @@ export default function DeleteAccountPage() {
           Suppression de compte
         </h1>
         <p className="text-body-md text-on-surface-variant mb-8 text-center">
-          Renseignez l'adresse email associée à votre compte pour demander la
-          suppression de toutes vos données personnelles.
+          Renseignez votre adresse email associée à votre compte pour demander
+          la suppression de toutes vos données personnelles.
         </p>
 
         {message && (
@@ -112,18 +113,18 @@ export default function DeleteAccountPage() {
         </form>
 
         <div className="mt-8 text-center">
-          <a href="/" className="text-body-sm text-primary hover:underline">
-            Retour à l'accueil
-          </a>
+          <Link href="/" className="text-body-sm text-primary hover:underline">
+            Retour à l&apos;accueil
+          </Link>
         </div>
       </div>
       <footer className="absolute bottom-4 sm:bottom-8 w-full flex flex-col items-center gap-2 z-0">
-        <a
+        <Link
           href="/privacy"
           className="text-xs sm:text-sm text-on-surface-variant hover:text-primary transition-colors underline-offset-4 hover:underline"
         >
           Politique de confidentialité et gestion des données
-        </a>
+        </Link>
       </footer>
     </div>
   );
