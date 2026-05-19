@@ -16,7 +16,7 @@ export default function HistoryCard({ item }: HistoryCardProps) {
             <h3 className="font-body-md text-body-md font-semibold text-on-surface group-hover:text-primary transition-colors">
               {item.clientName} - {item.issue}
             </h3>
-            <p className="font-label-sm text-label-sm text-on-surface-variant">Client: Jane Doe • Ticket {item.ticketId}</p>
+            <p className="font-label-sm text-label-sm text-on-surface-variant">Ticket {item.ticketId}</p>
           </div>
         </div>
         <div className="flex flex-col items-end gap-xs">

@@ -52,10 +52,23 @@ export const useSupportStore = create<SupportState>((set, get) => ({
 
   fetchQueue: async (token) => {
     try {
-      const res = await axiosInstance.get('/chat/admin/conversations?status=waiting', {
-        headers: { Authorization: `Bearer ${token}` }
+      // Fetch both waiting and open tickets for the queue
+      const [waitingRes, openRes] = await Promise.all([
+        axiosInstance.get('/chat/admin/conversations?status=waiting', {
+          headers: { Authorization: `Bearer ${token}` }
+        }),
+        axiosInstance.get('/chat/admin/conversations?status=open', {
+          headers: { Authorization: `Bearer ${token}` }
+        })
+      ]);
+      const combinedQueue = [...waitingRes.data, ...openRes.data];
+      // Sort combined queue by oldest first
+      combinedQueue.sort((a, b) => {
+        const dateA = new Date(a.lastMessageAt || a.createdAt).getTime();
+        const dateB = new Date(b.lastMessageAt || b.createdAt).getTime();
+        return dateA - dateB; // oldest first
       });
-      set({ queue: res.data });
+      set({ queue: combinedQueue });
     } catch (error) {
       console.error('Failed to fetch queue', error);
     }
@@ -63,7 +76,7 @@ export const useSupportStore = create<SupportState>((set, get) => ({
 
   fetchActiveChats: async (token) => {
     try {
-      const res = await axiosInstance.get('/chat/admin/conversations?status=open', {
+      const res = await axiosInstance.get('/chat/admin/conversations?status=active', {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ activeChats: res.data });
@@ -127,9 +140,14 @@ export const useSupportStore = create<SupportState>((set, get) => ({
   },
 
   initSocket: (token) => {
+    const currentSocket = get().socket;
+    if (currentSocket) {
+      return; // Socket is already initialized
+    }
+
     const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:7700';
-    // Using the base URL without /api for Socket.io
-    const socketUrl = baseURL.replace('/api', '');
+    // Using the base URL without /api for Socket.io, and targeting the /chat namespace
+    const socketUrl = baseURL.replace('/api', '') + '/chat';
     
     const socket = io(socketUrl, {
       auth: { token },
@@ -143,8 +161,12 @@ export const useSupportStore = create<SupportState>((set, get) => ({
     // Simulate listening to events (adjust according to your backend implementation)
     socket.on('newMessage', (message: ChatMessage) => {
       const { selectedChat, messages } = get();
-      if (selectedChat && selectedChat.id === message.conversationId) {
-        set({ messages: [...messages, message] });
+      if (selectedChat && (selectedChat.id === message.conversationId || (selectedChat as any)._id === message.conversationId)) {
+        // Prevent duplicate messages
+        const isDuplicate = messages.some((m) => m.id === message.id || (m as any)._id === message.id);
+        if (!isDuplicate) {
+          set({ messages: [...messages, message] });
+        }
       }
     });
 

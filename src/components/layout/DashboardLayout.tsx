@@ -22,7 +22,7 @@ export default function DashboardLayout({
     return () => {
       disconnectSocket();
     };
-  }, [status, session, initSocket, disconnectSocket]);
+  }, [status, session?.accessToken, initSocket, disconnectSocket]);
 
   return (
     <div className="flex min-h-screen bg-background text-on-surface font-body-md">

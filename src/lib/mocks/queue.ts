@@ -2,7 +2,7 @@ export interface Ticket {
   id: string;
   clientName: string;
   clientInitials: string;
-  clientType: "VIP Customer" | "Standard" | "Nouveau Client";
+  clientType: "VIP Customer" | "Standard" | "Nouveau Client" | "Professionnel" | "Client";
   subject: string;
   description: string;
   category: string;
