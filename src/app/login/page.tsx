@@ -52,7 +52,7 @@ export default function LoginPage() {
       });
 
       if (res?.error) {
-        setError("Code invalide ou expiré.");
+        setError(res.error === "CredentialsSignin" ? "Code invalide ou expiré." : res.error);
       } else {
         router.push("/dashboard");
       }

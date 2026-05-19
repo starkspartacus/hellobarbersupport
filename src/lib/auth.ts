@@ -42,10 +42,12 @@ export const authOptions: NextAuthOptions = {
               role: user?.role || "support",
             };
           }
-          return null;
+          throw new Error("Jeton d'accès manquant dans la réponse du serveur.");
         } catch (error: any) {
           console.error("[NextAuth] Erreur de vérification OTP:", error?.response?.data || error.message);
-          return null;
+          // Renvoyer le message d'erreur exact du backend si disponible, sinon un message générique
+          const errorMessage = error?.response?.data?.message || error.message || "Code invalide ou expiré.";
+          throw new Error(errorMessage);
         }
       }
     })
