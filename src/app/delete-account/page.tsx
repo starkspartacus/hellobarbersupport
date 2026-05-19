@@ -41,7 +41,7 @@ export default function DeleteAccountPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-background to-surface-variant/30 px-4 sm:px-6 relative overflow-hidden">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-background to-surface-variant/30 px-4 sm:px-6 relative overflow-hidden">
       {/* Éléments de décoration en arrière-plan */}
       <div className="absolute top-[-10%] left-[-10%] w-96 h-96 bg-error/5 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
       <div
@@ -49,7 +49,7 @@ export default function DeleteAccountPage() {
         style={{ animationDelay: "2s" }}
       ></div>
 
-      <div className="w-full max-w-md bg-surface/80 backdrop-blur-xl p-6 sm:p-10 rounded-[2rem] shadow-xl border border-white/20 z-10 animate-fade-in-up transition-all duration-300">
+      <div className="w-full max-w-[420px] bg-surface/80 backdrop-blur-xl p-6 sm:p-10 rounded-[2rem] shadow-xl border border-white/20 z-10 animate-fade-in-up transition-all duration-300">
         <div className="flex justify-center mb-6">
           <div className="w-16 h-16 bg-error/10 text-error rounded-2xl flex items-center justify-center animate-bounce-slow">
             <span className="material-symbols-outlined text-3xl">
