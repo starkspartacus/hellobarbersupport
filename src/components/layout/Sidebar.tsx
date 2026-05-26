@@ -68,6 +68,19 @@ export default function Sidebar() {
             History
           </Link>
         </li>
+        <li>
+          <Link 
+            href="/dashboard/identity" 
+            className={`flex items-center gap-md p-sm rounded-lg transition-colors duration-200 cursor-pointer active:scale-95 ${
+              isActive("/dashboard/identity")
+                ? "bg-on-secondary-fixed-variant text-on-secondary"
+                : "text-outline-variant hover:text-on-secondary hover:bg-on-secondary-fixed-variant"
+            }`}
+          >
+            <span className="material-symbols-outlined">badge</span>
+            Identités
+          </Link>
+        </li>
         {isSuperAdmin && (
           <li>
             <Link 

@@ -3,12 +3,8 @@
 # dependencies
 /node_modules
 /.pnp
-.pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
+.pnp.js
+.pnp.cjs
 
 # testing
 /coverage
@@ -16,8 +12,6 @@
 # next.js
 /.next/
 /out/
-
-# production
 /build
 
 # misc
@@ -30,8 +24,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# local env files
+.env*.local
+.env
 
 # vercel
 .vercel
@@ -39,3 +34,20 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS metadata
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Koup / Gemini Specific
+.gemini/
