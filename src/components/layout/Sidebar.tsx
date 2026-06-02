@@ -81,6 +81,19 @@ export default function Sidebar() {
             Identités
           </Link>
         </li>
+        <li>
+          <Link 
+            href="/dashboard/images" 
+            className={`flex items-center gap-md p-sm rounded-lg transition-colors duration-200 cursor-pointer active:scale-95 ${
+              isActive("/dashboard/images")
+                ? "bg-on-secondary-fixed-variant text-on-secondary"
+                : "text-outline-variant hover:text-on-secondary hover:bg-on-secondary-fixed-variant"
+            }`}
+          >
+            <span className="material-symbols-outlined">photo_library</span>
+            Photos Catalogue
+          </Link>
+        </li>
         {isSuperAdmin && (
           <li>
             <Link 
