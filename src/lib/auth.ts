@@ -44,6 +44,7 @@ export const authOptions: NextAuthOptions = {
           }
           throw new Error("Jeton d'accès manquant dans la réponse du serveur.");
         } catch (error: any) {
+          console.error("[NextAuth] Raw error:", error);
           console.error("[NextAuth] Erreur de vérification OTP:", error?.response?.data || error.message);
           // Renvoyer le message d'erreur exact du backend si disponible, sinon un message générique
           const errorMessage = error?.response?.data?.message || error.message || "Code invalide ou expiré.";
