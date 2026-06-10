@@ -15,17 +15,17 @@ export default function StatCard({ title, value, icon, type }: StatCardProps) {
   };
 
   const getValueClass = () => {
-    return type === "critical" ? "text-error" : "text-on-surface";
+    return type === "critical" ? "text-error font-bold" : "text-on-surface font-bold";
   };
 
   return (
-    <div className="bg-surface p-md rounded-lg border border-outline-variant shadow-sm flex items-center gap-md">
-      <div className={`w-12 h-12 rounded-full flex items-center justify-center ${getIconContainerClass()}`}>
+    <div className="bg-surface p-md rounded-xl border border-outline-variant/60 shadow-soft flex items-center gap-md transition-all duration-300 hover:shadow-md hover:-translate-y-px">
+      <div className={`w-12 h-12 rounded-full flex items-center justify-center shadow-sm ${getIconContainerClass()}`}>
         <span className="material-symbols-outlined">{icon}</span>
       </div>
       <div>
-        <p className="font-label-sm text-label-sm text-on-surface-variant uppercase">{title}</p>
-        <p className={`font-headline-md text-headline-md ${getValueClass()}`}>{value}</p>
+        <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">{title}</p>
+        <p className={`font-headline-md text-headline-md mt-0.5 ${getValueClass()}`}>{value}</p>
       </div>
     </div>
   );
