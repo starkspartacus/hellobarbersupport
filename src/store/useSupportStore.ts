@@ -117,7 +117,7 @@ export const useSupportStore = create<SupportState>((set, get) => ({
 
   takeTicket: async (conversationId, token) => {
     try {
-      await axiosInstance.patch(`/chat/admin/${conversationId}/status`, { status: 'active' }, {
+      await axiosInstance.post(`/chat/admin/${conversationId}/status`, { status: 'active' }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       await get().fetchQueue(token);
@@ -129,7 +129,7 @@ export const useSupportStore = create<SupportState>((set, get) => ({
 
   resolveTicket: async (conversationId, token) => {
     try {
-      await axiosInstance.patch(`/chat/admin/${conversationId}/status`, { status: 'resolved' }, {
+      await axiosInstance.post(`/chat/admin/${conversationId}/status`, { status: 'resolved' }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ selectedChat: null, messages: [] });

@@ -51,7 +51,7 @@ export default function VideoModerationPage() {
     setProcessingIds((prev) => new Set(prev).add(id));
 
     try {
-      await axiosInstance.patch(
+      await axiosInstance.post(
         `/reported-tutorials/${id}/review`,
         { status, tenantId },
         { headers: { Authorization: `Bearer ${token}` } }

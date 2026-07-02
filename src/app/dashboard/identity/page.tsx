@@ -35,7 +35,7 @@ export default function IdentityVerificationPage() {
   const handleReview = async (id: string, decision: 'approved' | 'rejected', reason?: string) => {
     if (!token) return;
     try {
-      await axiosInstance.patch(`/identity-verification/${id}/review`, {
+      await axiosInstance.post(`/identity-verification/${id}/review`, {
         decision,
         rejectionReason: reason
       }, {
