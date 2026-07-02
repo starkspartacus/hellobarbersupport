@@ -169,7 +169,7 @@ export default function ImageModerationPage() {
     setProcessingIds((prev) => new Set(prev).add(id));
 
     try {
-      await axiosInstance.patch(
+      await axiosInstance.post(
         `/shared-catalog-images/${id}/review`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
